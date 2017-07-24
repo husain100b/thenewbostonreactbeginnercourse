@@ -26,6 +26,8 @@
                 console.log('Remocving comment');
             },
             save: function () {
+                var val = this.refs.newText.value;
+                console.log('New comments ' + val);
                 this.setState({editing: false});
             },
 
@@ -41,7 +43,7 @@
             renderForm: function () {
                 return (
                     <div className="commentContainer">
-                        <textarea defaultValue={this.props.children}></textarea>    
+                        <textarea ref="newText" defaultValue={this.props.children}></textarea>    
                         <button onClick={this.save} className="button-success">Save</button>
                     </div>
                 );
@@ -56,13 +58,34 @@
             }
        });
        
+       var Board = React.createClass({
+            getInitialState: function () {
+                return {
+                    comments: [
+                        'I like faluda',
+                        'Want to get ice creame',
+                        'Ok, You have enough comments now'
+                    ]
+                }
+            },
+
+            render: function () {
+                return (
+                    <div className="board">
+                        {
+                            this.state.comments.map(function (text, i) {
+                                return (<Comment key={i}>{text}</Comment>);
+                            })
+                        }
+                    </div>
+                );
+            }
+       });
+
        ReactDOM.render(
-        <div className="board">
-            <Comment>Here Is My Name Husain</Comment>
-            <Comment>Faluda</Comment>
-            <Comment>Speacial Food</Comment>
-        </div>,
-        document.getElementById('container')
+            <Board />
+            ,
+            document.getElementById('container')
        );
 
     </script>
