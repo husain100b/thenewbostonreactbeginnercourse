@@ -20,12 +20,16 @@
                 return {editing: false}
             },
             edit: function () {
-                this.setState({editing: true})
+                this.setState({editing: true});
             },
             remove: function () {
                 console.log('Remocving comment');
             },
-            render: function () {
+            save: function () {
+                this.setState({editing: false});
+            },
+
+            renderNormal: function () {
                 return (
                     <div className="commentContainer">
                         <div className="commentText">{this.props.children}</div>
@@ -33,6 +37,22 @@
                         <button onClick={this.remove} className="button-danger">Remove</button>
                     </div>
                 );
+            },
+            renderForm: function () {
+                return (
+                    <div className="commentContainer">
+                        <textarea defaultValue={this.props.children}></textarea>    
+                        <button onClick={this.save} className="button-success">Save</button>
+                    </div>
+                );
+            },
+
+            render: function () {
+                if(this.state.editing) {
+                    return this.renderForm();
+                } else {
+                    return this.renderNormal();
+                }
             }
        });
        
